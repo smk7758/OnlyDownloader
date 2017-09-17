@@ -15,15 +15,14 @@ import java.net.URL;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 
 public class Controller {
-	Main main;
 	@FXML
-	Label label_log;
+	TextArea textarea_log;
 	@FXML
 	Button btn_select_folder;
 	@FXML
@@ -35,14 +34,6 @@ public class Controller {
 	@FXML
 	ProgressBar progressbar_download;
 
-	public Controller() {
-		this.main = new Main();
-	}
-
-	public Controller(Main main) {
-		this.main = main;
-	}
-
 	@FXML
 	protected void onBtnSelectFolder(ActionEvent e) throws InterruptedException {
 		final DirectoryChooser fc = new DirectoryChooser();
@@ -52,21 +43,46 @@ public class Controller {
 			if (importFile != null) field_download_path.setText(importFile.getPath().toString());
 		} else {
 			System.out.println("Main.primaryStage is null.");
+			textarea_log.appendText("\n[Error] Main.primaryStage is null.");
 		}
 	}
 
 	@FXML
 	protected void onBtnStartDownload(ActionEvent e) {
-		// Source from: http://www.k-sugi.sakura.ne.jp/java/android/1710/
+		// initialize
 		URL url = null;
 		HttpURLConnection conn = null;
-		String filename_extension = null;
+
+		// null,Empty check
+		if (field_url == null || field_url.getText().trim().length() < 1 || field_download_path == null
+				|| field_download_path.getText().trim().length() < 1) {
+			System.out.println("Please write all of fields.");
+			textarea_log.appendText("\n[Error] Please write all of fields.");
+			return;
+		}
+
+		// todo
+		// Get filename
+		String[] url_split_filename = field_url.getText().trim().split("//");
+		String filename = url_split_filename[url_split_filename.length - 1];
+		System.out.println("Filename: " + filename);
+		textarea_log.appendText("\n[Log] Filename: " + filename);
+
+		// Get extension
+		String[] url_split_extension = field_url.getText().split("\\.");
+		String filename_extension = url_split_extension[url_split_extension.length - 1];
+		System.out.println("FilenameExtension: " + filename_extension);
+		textarea_log.appendText("\n[Log] FilenameExtension: " + filename_extension);
+
+		// URL init.
 		try {
-			if (field_url.getText().length() < 1 || field_download_path.getText().length() < 1); //returnなり止める。
-			String[] url_split = field_url.getText().split("\\.");
-			filename_extension = url_split[url_split.length - 1];
-			System.out.println(filename_extension);
 			url = new URL(field_url.getText());
+		} catch (MalformedURLException ex) {
+			ex.printStackTrace();
+		}
+
+		// HTTP Conection
+		try {
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setAllowUserInteraction(false);
 			conn.setInstanceFollowRedirects(true);
@@ -75,17 +91,24 @@ public class Controller {
 			int httpStatusCode = conn.getResponseCode();
 			if (httpStatusCode != HttpURLConnection.HTTP_OK) {
 				System.out.println("Conection Error Code: " + httpStatusCode);
+				textarea_log.appendText("\n[Log] Conection Error Code: " + httpStatusCode);
 				return;
 			}
-			String content_type = conn.getContentType();
-			System.out.println("ContentType: " + content_type);
-		} catch (MalformedURLException ex) {
-			ex.printStackTrace();
 		} catch (ProtocolException ex) {
 			ex.printStackTrace();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+
+		// Get content type
+		String content_type = conn.getContentType();
+		System.out.println("ContentType: " + content_type);
+		textarea_log.appendText("\n[Log] ContentType: " + content_type);
+
+		// Get content length
+		long content_length = conn.getContentLengthLong();
+		System.out.println("ContentLength: " + content_length);
+		textarea_log.appendText("\n[Log] ContentLength: " + content_length);
 
 		// Input Stream
 		DataInputStream dataInStream = null;
@@ -95,14 +118,19 @@ public class Controller {
 			ex.printStackTrace();
 		}
 
+		// todo
+		// Output Path
+		String output_path = null;
+		if (field_download_path.getText().trim().endsWith("\\")) {
+			output_path = field_download_path.getText().trim().substring(0,
+					field_download_path.getText().trim().length());
+		}
+
 		// Output Stream
 		DataOutputStream dataOutStream = null;
 		try {
-			String output_path;
-			if (System.getProperty("user.name")
-					.equals("smk7758")) output_path = "F:\\users\\smk7758\\Desktop\\log_client." + filename_extension;
-			else output_path = System.getProperty("user.home") + "\\Desktop\\log_client." + filename_extension;
-			dataOutStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(output_path)));
+			dataOutStream = new DataOutputStream(
+					new BufferedOutputStream(new FileOutputStream(output_path + "/" + filename)));
 		} catch (FileNotFoundException ex) {
 			ex.printStackTrace();
 		}
@@ -112,20 +140,21 @@ public class Controller {
 		int readByte = 0;
 		try {
 			while (-1 != (readByte = dataInStream.read(b))) {
-				dataOutStream.write(b, 0, readByte);
+				if (dataOutStream != null) dataOutStream.write(b, 0, readByte);
 			}
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+		System.out.println("Finish download.");
+		textarea_log.appendText("Finish download.");
 
 		// Close Stream
 		try {
-			dataInStream.close();
 			dataOutStream.close();
+			dataInStream.close();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 		conn.disconnect();
-
 	}
 }
