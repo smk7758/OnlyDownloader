@@ -1,7 +1,6 @@
 package com.github.smk7758.OnlyDownloader;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,9 +8,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	public Controller ctr = new Controller();
+//	public Controller ctr = new Controller();
 	public static Stage primaryStage = null;
-	public final static LocalDateTime time = LocalDateTime.now();
 
 	public static void main(String[] args) {
 		launch(args);
@@ -31,8 +29,7 @@ public class Main extends Application {
 			// Set Scene
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			if (ctr.textarea_log != null) ctr.textarea_log.setText(Main.time.toString());
-			else System.out.println("NULL");
+//			primaryStage.onShownProperty();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

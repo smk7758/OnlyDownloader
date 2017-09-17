@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.time.LocalDateTime;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 
 public class Controller {
+	public final static LocalDateTime time = LocalDateTime.now();
 	@FXML
 	TextArea textarea_log;
 	@FXML
@@ -33,6 +35,11 @@ public class Controller {
 	TextField field_download_path;
 	@FXML
 	ProgressBar progressbar_download;
+
+	@Override
+	public void initialize () {
+		textarea_log.setText(time.toString());
+	}
 
 	@FXML
 	protected void onBtnSelectFolder(ActionEvent e) throws InterruptedException {
