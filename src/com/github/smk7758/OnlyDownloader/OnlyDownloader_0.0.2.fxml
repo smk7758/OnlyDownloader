@@ -8,27 +8,29 @@
 
 <GridPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="149.0" prefWidth="431.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.smk7758.OnlyDownloader.Controller">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="96.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="371.0" minWidth="10.0" prefWidth="225.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="371.0" minWidth="3.0" prefWidth="6.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="110.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="160.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="5.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button fx:id="btn_start_download" mnemonicParsing="false" onAction="#onBtnStartDownload" text="Start Download" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-      <TextField fx:id="field_url" GridPane.columnIndex="1" />
-      <ProgressBar fx:id="progressbar_download" prefWidth="200.0" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <TextField fx:id="field_download_path" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Button fx:id="btn_select_folder" mnemonicParsing="false" onAction="#onBtnSelectFolder" text="Select Floder" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="URL" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Download Path" GridPane.rowIndex="1" />
-      <Region prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
-      <TextArea fx:id="textarea_log" prefHeight="0.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Button fx:id="btn_start_download" mnemonicParsing="false" onAction="#onBtnStartDownload" text="Start Download" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+      <TextField fx:id="field_url" GridPane.columnIndex="2" />
+      <ProgressBar fx:id="progressbar_download" prefWidth="200.0" progress="0.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <TextField fx:id="field_download_path" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <Button fx:id="btn_select_folder" mnemonicParsing="false" onAction="#onBtnSelectFolder" text="Select Floder" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="URL" GridPane.columnIndex="1" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Download Path" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Region prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" />
+      <TextArea fx:id="textarea_log" prefHeight="42.0" prefWidth="292.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="3" />
    </children>
 </GridPane>
