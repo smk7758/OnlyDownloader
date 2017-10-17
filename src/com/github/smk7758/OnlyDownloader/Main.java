@@ -8,32 +8,35 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-//	public Controller ctr = new Controller();
-	public static Stage primaryStage = null;
+//	public static Controller ctr;
+	public static Stage primary_stage = null;
 
 	public static void main(String[] args) {
 		launch(args);
 	}
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage primary_stage) throws Exception {
 		try {
+//			FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlyDownloader_0.0.2.fxml"));
+//			Scene scene = new Scene(loader.load());
+//			ctr = (Controller) loader.getController();
 			Scene scene = new Scene(FXMLLoader.load(getClass().getResource("OnlyDownloader_0.0.2.fxml")));
 			// Set ico
-//			primaryStage.getIcons().add(new Image((getClass().getResource("OnlyDownloader_x16.ico").toString())));
-//			primaryStage.getIcons().add(new Image((getClass().getResource("OnlyDownloader_x32.ico").toString())));
+			// primaryStage.getIcons().add(new Image((getClass().getResource("OnlyDownloader_x16.ico").toString())));
+			// primaryStage.getIcons().add(new Image((getClass().getResource("OnlyDownloader_x32.ico").toString())));
 			// Set Title
-			primaryStage.setTitle("OnlyDownloader_0.0.2");
+			primary_stage.setTitle("OnlyDownloader_0.0.2");
 			// Set Window
-			primaryStage.setResizable(false);
+			primary_stage.setResizable(false);
 			// Set Scene
-			primaryStage.setScene(scene);
-			primaryStage.show();
-//			primaryStage.onShownProperty();
+			primary_stage.setScene(scene);
+			primary_stage.show();
+			// primaryStage.onShownProperty();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			Main.primaryStage = primaryStage;
+			Main.primary_stage = primary_stage;
 		}
 	}
 }
